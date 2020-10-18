@@ -8,6 +8,10 @@ module Ui
   class Hosts
     HOSTS_FILE = 'hosts.gc'
 
+    def current
+      list.first
+    end
+
     def any_remote?
       list.size > 1
     end

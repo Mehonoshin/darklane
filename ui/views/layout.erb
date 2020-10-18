@@ -28,6 +28,12 @@
       <br>
       <br>
       <div class="starter-template">
+        <% if params[:tunnel] %>
+          <div class="alert alert-primary" role="alert">
+            <%= params[:tunnel] %>
+          </div>
+        <% end %>
+
         <%= yield %>
       </div>
     </main>
