@@ -1,0 +1,49 @@
+<h2>Hosts</h2>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>State</td>
+      <th>IP</td>
+      <th>I2p address</td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hosts.each_with_index do |host, index| %>
+      <tr>
+        <td>
+          <% if index == 0 %>
+            <h6><span class="badge badge-secondary">Local</span></h6>
+          <% else %>
+            Remote
+          <% end %>
+        </td>
+        <td>
+          <%= host.ip %>
+        </td>
+        <td>
+          <%= host.b32 %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <form action='/hosts/add' method='POST'>
+        <td>
+          <input type='submit' value='Add' class='btn btn-primary'>
+        </td>
+        <td>
+          <input type='text' name='ip'>
+        </td>
+        <td>
+          <input type='text' name='b32'>
+        </td>
+      </form>
+    </tr>
+  </tbody>
+</table>
+
+<%#TODO: Show this button only when remote hosts were added%>
+<a href="/start" class="btn btn-lg btn-success">Start</a>
+
+
