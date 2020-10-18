@@ -2,4 +2,4 @@ build:
 	docker build -t tunnel .
 
 run:
-	docker run -ti -p 7070:7070 tunnel bash
+	docker run --cap-add CAP_NET_ADMIN --cap-add CAP_NET_RAW -ti tunnel bash

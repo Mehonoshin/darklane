@@ -10,3 +10,11 @@ echo "I2p address: $b32"
 
 ipv6=$(./lib/ipv6.sh $b32)
 echo "IPv6: $ipv6"
+
+echo "$ipv6 $b32.b32.i2p" > hosts.gc
+
+echo "Hosts file:"
+cat hosts.gc
+
+# TODO check if tun exists
+./lib/tun.sh

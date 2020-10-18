@@ -7,5 +7,6 @@ regex='(.*) ([a-z0-9]+)'
 
 b32="${BASH_REMATCH[2]}"
 
+# TODO: validate b32
 echo $b32
 
