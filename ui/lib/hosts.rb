@@ -8,6 +8,10 @@ module Ui
   class Hosts
     HOSTS_FILE = 'hosts.gc'
 
+    def any_remote?
+      list.size > 1
+    end
+
     def list
       File
         .readlines("../#{HOSTS_FILE}")

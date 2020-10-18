@@ -4,7 +4,7 @@ require './lib/hosts'
 module Ui
   class Web < Sinatra::Application
     get '/' do
-      @hosts = Ui::Hosts.new.list
+      @hosts = Ui::Hosts.new
       erb :index
     end
 
