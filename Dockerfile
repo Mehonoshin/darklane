@@ -3,7 +3,7 @@ FROM ubuntu
 USER root
 RUN apt update
 RUN apt install -y openvpn i2pd
-RUN apt install -y autoconf automake g++ make net-tools wget curl ruby ruby-dev
+RUN apt install -y autoconf automake g++ make net-tools wget curl ruby ruby-dev iputils-ping
 RUN gem install bundler -N
 
 RUN wget https://www.cypherpunk.at/ocat/download/Source/current/onioncat-0.3.8.tar.gz
@@ -17,6 +17,8 @@ COPY config/i2pd.conf /etc/i2pd/i2pd.conf
 COPY entrypoint.sh /app/entrypoint.sh
 COPY lib /app/lib
 COPY ui /app/ui
+
+RUN cd /app/ui && bundle install
 
 EXPOSE 7070 9871
 

@@ -29,4 +29,4 @@ echo "To start gcat run:"
 echo "./lib/garlicat.sh $b32.b32.i2p"
 
 # Run UI app to manage hosts list
-cd ui && bundle install && puma -b tcp://0.0.0.0:9871
+cd ui && puma -b tcp://0.0.0.0:9871
