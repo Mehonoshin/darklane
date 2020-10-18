@@ -1,3 +1,3 @@
 #!/bin/bash
 
-#ocat -I -B -U -g ./hosts.gc IP
+ocat -I -B -U -g ./hosts.gc $1
