@@ -1,6 +1,8 @@
 # node
 Full stack required to run node
 
+(Garlicat HOWTO)[https://www.onioncat.org/2019/08/garlicat-howto/]
+
 ## TODO
 
 - [ ] Setup ovpn and routing
