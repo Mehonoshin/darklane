@@ -1,7 +1,9 @@
-# node
+# DarkLane
 Full stack required to run node
 
-(Garlicat HOWTO)[https://www.onioncat.org/2019/08/garlicat-howto/]
+[Garlicat HOWTO](https://www.onioncat.org/2019/08/garlicat-howto/)
+
+![](https://i.imgur.com/AbvFvwy.png)
 
 ## TODO
 
