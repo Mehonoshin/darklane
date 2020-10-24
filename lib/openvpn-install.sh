@@ -831,7 +831,7 @@ ifconfig-pool-persist ipp.txt" >>/etc/openvpn/server.conf
 		fi
 		;;
 	esac
-	echo 'push "redirect-gateway def1 bypass-dhcp"' >>/etc/openvpn/server.conf
+	echo 'push "route 10.8.0.0 255.255.255.0"' >>/etc/openvpn/server.conf
 
 	# IPv6 network settings if needed
 	if [[ $IPV6_SUPPORT == 'y' ]]; then
@@ -944,32 +944,32 @@ verb 3" >>/etc/openvpn/server.conf
 	# Script to add rules
 	echo "#!/bin/sh
 iptables -t nat -I POSTROUTING 1 -s 10.8.0.0/24 -o $NIC -j MASQUERADE
-iptables -I INPUT 1 -i tun1 -j ACCEPT
-iptables -I FORWARD 1 -i $NIC -o tun1 -j ACCEPT
-iptables -I FORWARD 1 -i tun1 -o $NIC -j ACCEPT
+iptables -I INPUT 1 -i tun0 -j ACCEPT
+iptables -I FORWARD 1 -i $NIC -o tun0 -j ACCEPT
+iptables -I FORWARD 1 -i tun0 -o $NIC -j ACCEPT
 iptables -I INPUT 1 -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" >/etc/iptables/add-openvpn-rules.sh
 
 	if [[ $IPV6_SUPPORT == 'y' ]]; then
 		echo "ip6tables -t nat -I POSTROUTING 1 -s fd42:42:42:42::/112 -o $NIC -j MASQUERADE
-ip6tables -I INPUT 1 -i tun1 -j ACCEPT
-ip6tables -I FORWARD 1 -i $NIC -o tun1 -j ACCEPT
-ip6tables -I FORWARD 1 -i tun1 -o $NIC -j ACCEPT
+ip6tables -I INPUT 1 -i tun0 -j ACCEPT
+ip6tables -I FORWARD 1 -i $NIC -o tun0 -j ACCEPT
+ip6tables -I FORWARD 1 -i tun0 -o $NIC -j ACCEPT
 ip6tables -I INPUT 1 -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" >>/etc/iptables/add-openvpn-rules.sh
 	fi
 
 	# Script to remove rules
 	echo "#!/bin/sh
 iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -o $NIC -j MASQUERADE
-iptables -D INPUT -i tun1 -j ACCEPT
-iptables -D FORWARD -i $NIC -o tun1 -j ACCEPT
-iptables -D FORWARD -i tun1 -o $NIC -j ACCEPT
+iptables -D INPUT -i tun0 -j ACCEPT
+iptables -D FORWARD -i $NIC -o tun0 -j ACCEPT
+iptables -D FORWARD -i tun0 -o $NIC -j ACCEPT
 iptables -D INPUT -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" >/etc/iptables/rm-openvpn-rules.sh
 
 	if [[ $IPV6_SUPPORT == 'y' ]]; then
 		echo "ip6tables -t nat -D POSTROUTING -s fd42:42:42:42::/112 -o $NIC -j MASQUERADE
-ip6tables -D INPUT -i tun1 -j ACCEPT
-ip6tables -D FORWARD -i $NIC -o tun1 -j ACCEPT
-ip6tables -D FORWARD -i tun1 -o $NIC -j ACCEPT
+ip6tables -D INPUT -i tun0 -j ACCEPT
+ip6tables -D FORWARD -i $NIC -o tun0 -j ACCEPT
+ip6tables -D FORWARD -i tun0 -o $NIC -j ACCEPT
 ip6tables -D INPUT -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" >>/etc/iptables/rm-openvpn-rules.sh
 	fi
 
