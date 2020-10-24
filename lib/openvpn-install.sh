@@ -10,12 +10,6 @@ function isRoot() {
 	fi
 }
 
-function tunAvailable() {
-	if [ ! -e /dev/net/tun ]; then
-		return 1
-	fi
-}
-
 function checkOS() {
 	if [[ -e /etc/debian_version ]]; then
 		OS="debian"
@@ -86,10 +80,6 @@ function checkOS() {
 function initialCheck() {
 	if ! isRoot; then
 		echo "Sorry, you need to run this as root"
-		exit 1
-	fi
-	if ! tunAvailable; then
-		echo "TUN is not available"
 		exit 1
 	fi
 	checkOS
@@ -954,32 +944,32 @@ verb 3" >>/etc/openvpn/server.conf
 	# Script to add rules
 	echo "#!/bin/sh
 iptables -t nat -I POSTROUTING 1 -s 10.8.0.0/24 -o $NIC -j MASQUERADE
-iptables -I INPUT 1 -i tun0 -j ACCEPT
-iptables -I FORWARD 1 -i $NIC -o tun0 -j ACCEPT
-iptables -I FORWARD 1 -i tun0 -o $NIC -j ACCEPT
+iptables -I INPUT 1 -i tun1 -j ACCEPT
+iptables -I FORWARD 1 -i $NIC -o tun1 -j ACCEPT
+iptables -I FORWARD 1 -i tun1 -o $NIC -j ACCEPT
 iptables -I INPUT 1 -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" >/etc/iptables/add-openvpn-rules.sh
 
 	if [[ $IPV6_SUPPORT == 'y' ]]; then
 		echo "ip6tables -t nat -I POSTROUTING 1 -s fd42:42:42:42::/112 -o $NIC -j MASQUERADE
-ip6tables -I INPUT 1 -i tun0 -j ACCEPT
-ip6tables -I FORWARD 1 -i $NIC -o tun0 -j ACCEPT
-ip6tables -I FORWARD 1 -i tun0 -o $NIC -j ACCEPT
+ip6tables -I INPUT 1 -i tun1 -j ACCEPT
+ip6tables -I FORWARD 1 -i $NIC -o tun1 -j ACCEPT
+ip6tables -I FORWARD 1 -i tun1 -o $NIC -j ACCEPT
 ip6tables -I INPUT 1 -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" >>/etc/iptables/add-openvpn-rules.sh
 	fi
 
 	# Script to remove rules
 	echo "#!/bin/sh
 iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -o $NIC -j MASQUERADE
-iptables -D INPUT -i tun0 -j ACCEPT
-iptables -D FORWARD -i $NIC -o tun0 -j ACCEPT
-iptables -D FORWARD -i tun0 -o $NIC -j ACCEPT
+iptables -D INPUT -i tun1 -j ACCEPT
+iptables -D FORWARD -i $NIC -o tun1 -j ACCEPT
+iptables -D FORWARD -i tun1 -o $NIC -j ACCEPT
 iptables -D INPUT -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" >/etc/iptables/rm-openvpn-rules.sh
 
 	if [[ $IPV6_SUPPORT == 'y' ]]; then
 		echo "ip6tables -t nat -D POSTROUTING -s fd42:42:42:42::/112 -o $NIC -j MASQUERADE
-ip6tables -D INPUT -i tun0 -j ACCEPT
-ip6tables -D FORWARD -i $NIC -o tun0 -j ACCEPT
-ip6tables -D FORWARD -i tun0 -o $NIC -j ACCEPT
+ip6tables -D INPUT -i tun1 -j ACCEPT
+ip6tables -D FORWARD -i $NIC -o tun1 -j ACCEPT
+ip6tables -D FORWARD -i tun1 -o $NIC -j ACCEPT
 ip6tables -D INPUT -i $NIC -p $PROTOCOL --dport $PORT -j ACCEPT" >>/etc/iptables/rm-openvpn-rules.sh
 	fi
 
@@ -1019,7 +1009,7 @@ WantedBy=multi-user.target" >/etc/systemd/system/iptables-openvpn.service
 	elif [[ $PROTOCOL == 'tcp' ]]; then
 		echo "proto tcp-client" >>/etc/openvpn/client-template.txt
 	fi
-	echo "remote $IP $PORT
+	echo "remote 127.0.0.1 $PORT
 dev tun
 resolv-retry infinite
 nobind
@@ -1034,7 +1024,6 @@ tls-client
 tls-version-min 1.2
 tls-cipher $CC_CIPHER
 ignore-unknown-option block-outside-dns
-setenv opt block-outside-dns # Prevent Windows 10 DNS leak
 verb 3" >>/etc/openvpn/client-template.txt
 
 	if [[ $COMPRESSION_ENABLED == "y" ]]; then
