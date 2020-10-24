@@ -8,7 +8,7 @@ Full stack required to run node
 ## TODO
 
 - [ ] Setup ovpn and routing
-- [ ] Serve ovpn config in UI
+- [x] Serve ovpn config in UI
 - [ ] Run ping in background
 - [ ] Display latency on UI
 - [ ] Autostart UI

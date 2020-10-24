@@ -21,6 +21,7 @@ COPY config/i2pd.conf /etc/i2pd/i2pd.conf
 COPY entrypoint.sh /app/entrypoint.sh
 COPY lib /app/lib
 COPY ui /app/ui
+COPY config /app/config
 
 RUN cd /app/ui && bundle install
 
