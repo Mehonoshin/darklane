@@ -1,78 +1,112 @@
-<% if @hosts.any_remote? %>
-  <form action="/tunnel/start" method="POST" >
-    <input type="submit" class="btn btn-lg btn-success" value="Start">
-  </form>
+<div class="d-steps">
+  <div class="wrapper">
+    <ul class="steps">
+      <li class="step active">
+        Step 1
+      </li>
+      <li class="step">
+        Step 2
+      </li>
+      <li class="step">
+        Step 3
+      </li>
+    </ul>
+  </div>
+</div>
 
-  <h2>Hosts</h2>
-  <table class="table table-bordered">
+<div class="row justify-content-center step-1">
+  <div class="col-6">
+    <h1 class="text-align-center">Add OpenVPN</h1>
+    <div class="paragraph text-align-justify">
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </div>
+    <div class="buttons text-align-center">
+      <button type="button" class="btn btn-block btn-half btn-primary">Download OpenVPN Config</button>
+      <button type="button" class="btn btn-block btn-half btn-outline-primary">Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="row step-2">
+  <div class="col-7">
+    <h1>Add remote host to start</h1>
+    <div class="paragraph text-align-justify">
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </div>
+    <form>
+      <div class="form-group">
+        <label for="ipv6-address">IPv6</label>
+        <input type="text" class="form-control js-copy-target-1" id="ip6v-address">
+        <small class="form-text text-muted error">Error text</small>
+      </div>
+      <div class="form-group">
+        <label for="i2p-address">.b32 i2p address</label>
+        <input type="text" class="form-control js-copy-target-2" id="i2p-address">
+        <small class="form-text text-muted error">Error text</small>
+      </div>
+      <button type="submit" class="btn btn-half btn-primary">Add</button>
+    </form>
+  </div>
+  <div class="col-5 jumbotron">
+    <h3>Current Host</h3>
+    <div>
+      For connection to another computer copy this ...
+    </div>
+
+    <form class="form-inline">
+      <div class="form-check mb-2 mr-sm-2 text-overflow js-copy-source-1">
+        irrmz4g6n7b4sqyjkt7b2zs7cum4fonmf744fwgaxvbfmmwmbhla.b32.i2p
+      </div>
+      <div class="btn btn-sm btn-primary btn-outline-primary mb-2 js-copy-button-1">Copy</div>
+    </form>
+
+    <form class="form-inline">
+      <div class="form-check mb-2 mr-sm-2 text-overflow js-copy-source-2">
+        irrmz4g6n7b4sqyjkt7b2zs7cum4fonmf744fwgaxvbfmmwmbhla.b32.i2p
+      </div>
+      <div class="btn btn-sm btn-primary btn-outline-primary mb-2 js-copy-button-2">Copy</div>
+    </form>
+  </div>
+</div>
+
+<div class="row step-3">
+  <h1>Hosts</h1>
+  <table class="table table-borderless">
     <thead>
       <tr>
-        <th>State</td>
-        <th>IP</td>
-        <th>I2p address</td>
+        <th scope="col">State</th>
+        <th scope="col">IPv6</th>
+        <th scope="col">I2P</th>
       </tr>
     </thead>
-
     <tbody>
-      <% @hosts.list.each_with_index do |host, index| %>
-        <tr>
-          <td>
-            <% if index == 0 %>
-              <h6><span class="badge badge-success">Local</span></h6>
-            <% else %>
-              <h6><span class="badge badge-primary">Remote</span></h6>
-            <% end %>
-          </td>
-          <td>
-            <%= host.ip %>
-          </td>
-          <td>
-            <%= host.b32 %>
-          </td>
-        </tr>
-      <% end %>
-
-      <% if @hosts.any_remote? %>
-        <tr>
-          <form action='/hosts/add' method='POST'>
-            <td>
-              <input type='submit' value='Add' class='btn btn-primary'>
-            </td>
-            <td>
-              <input type='text' name='ip'>
-            </td>
-            <td>
-              <input type='text' name='b32'>
-            </td>
-          </form>
-        </tr>
-      <% end %>
+      <tr>
+        <th scope="row">
+          <div class="btn btn-sm btn-secondary mb-2">Local</div>
+        </th>
+        <td>
+          fd60:db4d:ddb5:2d8c:bd4:2563:2cc0:9d60
+        </td>
+        <td>
+          irrmz4g6n7b4sqyjkt7b2zs7cum4fonmf744fwgaxvbfmmwmbhla.b32.i2p
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <div class="btn btn-sm btn-dark mb-2">Remote</div>
+        </th>
+        <td>
+          fd60:db4d:ddb5:2d8c:bd4:2563:2cc0:9d60
+        </td>
+        <td>
+          irrmz4g6n7b4sqyjkt7b2zs7cum4fonmf744fwgaxvbfmmwmbhla.b32.i2p
+        </td>
+      </tr>
     </tbody>
   </table>
+  <div class="buttons">
+    <button type="button" class="btn btn-outline-primary ml-2">Add Host</button>
+    <button type="button" class="btn btn-primary">Start</button>
+  </div>
+</div>
 
-<% else %>
-  <h4>Current host</h4>
-  <code>
-    <%= @hosts.list.first.ip %>
-    <%= @hosts.list.first.b32 %>
-  </code>
-
-  <br />
-  <br />
-  <br />
-
-  <h3>Add remote host to start</h3>
-  <form action='/hosts/add' method='POST'>
-    <td>
-      <input type='submit' value='Add' class='btn btn-primary'>
-    </td>
-    <td>
-      <input type='text' name='ip' placeholder="IPv6">
-    </td>
-    <td>
-      <input type='text' name='b32' placeholder="*.b32.i2p address">
-    </td>
-  </form>
-<% end %>
-
-<a href='/ovpn/config' class='btn btn-primary'>OpenVPN config</a>

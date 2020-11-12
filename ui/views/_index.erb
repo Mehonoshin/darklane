@@ -1,0 +1,78 @@
+<% if @hosts.any_remote? %>
+  <form action="/tunnel/start" method="POST" >
+    <input type="submit" class="btn btn-lg btn-success" value="Start">
+  </form>
+
+  <h2>Hosts</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>State</td>
+        <th>IP</td>
+        <th>I2p address</td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @hosts.list.each_with_index do |host, index| %>
+        <tr>
+          <td>
+            <% if index == 0 %>
+              <h6><span class="badge badge-success">Local</span></h6>
+            <% else %>
+              <h6><span class="badge badge-primary">Remote</span></h6>
+            <% end %>
+          </td>
+          <td>
+            <%= host.ip %>
+          </td>
+          <td>
+            <%= host.b32 %>
+          </td>
+        </tr>
+      <% end %>
+
+      <% if @hosts.any_remote? %>
+        <tr>
+          <form action='/hosts/add' method='POST'>
+            <td>
+              <input type='submit' value='Add' class='btn btn-primary'>
+            </td>
+            <td>
+              <input type='text' name='ip'>
+            </td>
+            <td>
+              <input type='text' name='b32'>
+            </td>
+          </form>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% else %>
+  <h4>Current host</h4>
+  <code>
+    <%= @hosts.list.first.ip %>
+    <%= @hosts.list.first.b32 %>
+  </code>
+
+  <br />
+  <br />
+  <br />
+
+  <h3>Add remote host to start</h3>
+  <form action='/hosts/add' method='POST'>
+    <td>
+      <input type='submit' value='Add' class='btn btn-primary'>
+    </td>
+    <td>
+      <input type='text' name='ip' placeholder="IPv6">
+    </td>
+    <td>
+      <input type='text' name='b32' placeholder="*.b32.i2p address">
+    </td>
+  </form>
+<% end %>
+
+<a href='/ovpn/config' class='btn btn-primary'>OpenVPN config</a>
