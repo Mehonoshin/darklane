@@ -1,0 +1,100 @@
+/* Layout */
+.d-layout {
+}
+
+
+/* Lauout:header */
+.d-layout > .d-header > nav.navbar {
+  background-color: #132F4D !important;
+}
+
+.d-layout > .d-header > nav.navbar > .container > a.navbar-brand > img {
+  height: 30px;
+}
+
+
+/* Layout:page */
+.d-layout > .d-page {
+  margin-top: 56px;
+  padding-top: 16px;
+  position: relative;
+}
+
+.d-layout > .d-page > .alert {
+}
+
+/* Steps */
+.d-steps {
+  position: relative;
+}
+
+.d-steps > .wrapper {
+  text-align: center;
+}
+
+.d-steps > .wrapper > .steps {
+  display: inline-block;
+  padding: 0;
+  margin: 32px 0;
+}
+
+.d-steps > .wrapper > .steps > li.step {
+  display: inline-block;
+  padding: 0 8px;
+  color: #AAAAAA;
+}
+
+.d-steps > .wrapper > .steps > li.step.active {
+  color: #007BFF;
+}
+
+.buttons {
+  margin-top: 32px;
+}
+
+
+.step-1 .buttons .btn-half {
+  margin: 16px auto 0;
+}
+
+
+/* Helpers */
+
+.text-align-justify {
+  text-align: justify !important;
+}
+
+.text-align-center {
+  text-align: center !important;
+}
+
+.btn-half {
+  width: 50%;
+}
+
+.display-none {
+  display: none !important;
+}
+
+.error {
+  color: #dc3545 !important;
+}
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 82% !important;
+}
+
+/* Overloads */
+
+.form-group {
+  margin-top: 32px !important;
+}
+
+.form-inline {
+  margin: 16px 0;
+}
+
+.jumbotron {
+  height: 350px !important;
+}
